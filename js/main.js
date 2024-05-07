@@ -84,4 +84,60 @@ function animate(now) {
 
 // *Функция отслеживающая нажатия кнопок
  document.addEventListener('keydown', control); // Добавляем обработчик события нажатия клавиши
+
+ function control(event) { // Функция управления
+    animate(performance.now()); // Запускаем анимацию при каждом событии управления
+    e = event.keyCode; // Получаем код нажатой клавиши
+
+    // Обработка нажатий клавиш для управления змеей
+    if (e === 37 && snake.moveX !== +snake.step && snake.activeKey === true) { 
+        snake.moveX = -snake.step;  // Движение влево по оси X
+        snake.moveY = 0; // Сброс движения по оси Y
+        snake.activeKey = false; // Отключаем активность клавиш
+    }
+    if (e === 39 && snake.moveX !== -snake.step && snake.activeKey === true) { 
+        snake.moveX = +snake.step;  // Движение вправо по оси X
+        snake.moveY = 0; // Сброс движения по оси Y
+        snake.activeKey = false; // Отключаем активность клавиш
+    }
+    if (e === 38 && snake.moveY !== +snake.step && snake.activeKey === true) { 
+        snake.moveY = -snake.step;  // Движение вверх по оси Y
+        snake.moveX = 0; // Сброс движения по оси X
+        snake.activeKey = false; // Отключаем активность клавиш
+    }
+    if (e === 40 && snake.moveY !== -snake.step && snake.activeKey === true) { 
+        snake.moveY = +snake.step;  // Движение вниз по оси Y
+        snake.moveX = 0; // Сброс движения по оси X
+        snake.activeKey = false; // Отключаем активность клавиш
+    }
+
+    if (e === 32) restartGame(); // Если нажата клавиша "Пробел", перезапускаем игру
+}
+
+drawSnake(); // Вызываем функцию отрисовки змеи
+    
+    
+// *Функция рисующая змею в canvas элементе DOM
+function drawSnake() {
+    ambit(); // Проверяем, не выходит ли змея за рамки поля
+
+    ctx.fillStyle = snake.fill; // Задаем цвет для заполнения змеи
+    ctx.fillRect(snake.x += snake.moveX, snake.y += snake.moveY, snake.w, snake.h); // Рисуем змею и смещаем ее позицию
+
+    snake.body.unshift( { x: snake.x, y: snake.y } ); // Добавляем новую часть змеи в начало массива тела
+    if (snake.body.length > snake.size) { 
+        snake.body.splice( -(snake.body.length - snake.size)) 
+    } // Убираем ненужный хвост змеи
+
+    if (snake.body[0].x === foot.x && snake.body[0].y === foot.y) { // Если змея съела еду
+        snake.size++; // Увеличиваем размер змеи
+        snake.foot++; // Увеличиваем количество съеденной еды
+
+        refreshMeppingFoot();   // Обновляем отображение съеденной еды
+        refreshRecordFoot();    // Обновляем рекорд
+        positionFoot();         // Перемещаем еду на новое место
+    }
+
+
+}
 }
