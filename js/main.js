@@ -50,4 +50,16 @@ let snake = {
     y :         0, // позиция по y
     fill:       '#fa5656', // цвет еды
 }
+
+localStor(); // вызов функции localStor()
+
+// *Функция сохраняющая рекорд игры в Localstorage
+function localStor() {
+    if (localStorage.getItem('record')) { // проверка есть ли рекорд
+        snake.recordFoot = localStorage.getItem('record'); // запись рекорда в переменную
+        mappingRecord.innerHTML = snake.recordFoot; // изменение надписи
+    } else { // иначе
+        localStorage.setItem('record', snake.recordFoot) //  установка рекорда по умолчанию
+    }
+}
 }
