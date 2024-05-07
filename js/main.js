@@ -138,6 +138,28 @@ function drawSnake() {
         positionFoot();         // Перемещаем еду на новое место
     }
 
-
 }
+
+snake.activeKey = true; // Разрешаем изменять направление движения змеи
+    
+snake.body.forEach( function(el, index) { // Перебираем элементы тела змеи
+    crachedIntoTheTail(el, index); // Проверяем, не врезалась ли змея в свой хвост
+
+    if (index === snake.win) youWin(); // Проверяем, достигла ли змея выигрышной длины
+
+    if (index === 0) {
+        ctx.fillStyle = snake.fill; // Задаем цвет для заполнения головы змеи
+    } else {
+        ctx.fillStyle = snake.secFill; // Задаем цвет для заполнения остальных частей змеи
+    }
+    ctx.fillRect(el.x, el.y, snake.step, snake.step); // Рисуем каждый сегмент тела змеи
+});
+
+    // *Функция срабатывает если врезался в хвост
+    function crachedIntoTheTail(el, index) {  
+        // Функция проверяет, врезалась ли змея в свой хвост
+        if (snake.body.length > snake.defaultSize && snake.body[0].x === el.x && snake.body[0].y === el.y && index !== 0) {
+            restartGame(); // Перезапускаем игру, если змея врезалась в свой хвост
+        }
+    }
 }
