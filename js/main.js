@@ -62,4 +62,23 @@ function localStor() {
         localStorage.setItem('record', snake.recordFoot) //  установка рекорда по умолчанию
     }
 }
+
+    // *Функция анимации игры
+    function animate(now) {
+        requestAnimationFrame(animate); // Запрашиваем следующий кадр анимации
+    
+        let delta = now - then; // время между кадрами
+        if (delta > interval) { // Если прошло достаточно времени для следующего кадра
+            then = now - (delta % interval); // Обновляем время последнего кадра
+    
+            // Очищаем canvas перед отрисовкой нового кадра
+            ctx.clearRect(0, 0, mapWidth, mapHeight);
+    
+            // Отрисовываем змею
+            drawSnake();
+    
+            // Отрисовываем еду
+            drawFoot();
+        }
+    }
 }
