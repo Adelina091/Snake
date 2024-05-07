@@ -63,22 +63,25 @@ function localStor() {
     }
 }
 
-    // *Функция анимации игры
-    function animate(now) {
-        requestAnimationFrame(animate); // Запрашиваем следующий кадр анимации
+// *Функция анимации игры
+function animate(now) {
+    requestAnimationFrame(animate); // Запрашиваем следующий кадр анимации
     
-        let delta = now - then; // время между кадрами
-        if (delta > interval) { // Если прошло достаточно времени для следующего кадра
-            then = now - (delta % interval); // Обновляем время последнего кадра
+    let delta = now - then; // время между кадрами
+    if (delta > interval) { // Если прошло достаточно времени для следующего кадра
+         then = now - (delta % interval); // Обновляем время последнего кадра
     
-            // Очищаем canvas перед отрисовкой нового кадра
-            ctx.clearRect(0, 0, mapWidth, mapHeight);
+        // Очищаем canvas перед отрисовкой нового кадра
+        ctx.clearRect(0, 0, mapWidth, mapHeight);
     
-            // Отрисовываем змею
-            drawSnake();
+        // Отрисовываем змею
+        drawSnake();
     
-            // Отрисовываем еду
-            drawFoot();
+        // Отрисовываем еду
+         drawFoot();
         }
     }
+
+// *Функция отслеживающая нажатия кнопок
+ document.addEventListener('keydown', control); // Добавляем обработчик события нажатия клавиши
 }
